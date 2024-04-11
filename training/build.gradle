@@ -23,6 +23,8 @@ dependencies {
     // H2 DB 의존성 추가
     runtimeOnly 'com.h2database:h2'
 
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
