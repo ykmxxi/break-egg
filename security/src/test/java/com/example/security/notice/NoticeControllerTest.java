@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest
+@ActiveProfiles(profiles = "test")
 @Transactional
 class NoticeControllerTest {
 
@@ -39,9 +41,9 @@ class NoticeControllerTest {
 
     @Test
     void getNotice_인증없음() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/notice"))
-                .andExpect(MockMvcResultMatchers.redirectedUrlPattern("**/login"))
-                .andExpect(status().is3xxRedirection());
+        mvc.perform(MockMvcRequestBuilders.get("/notice")) // /notice GET 요청을 실행하면
+                .andExpect(MockMvcResultMatchers.redirectedUrlPattern("**/login")) // 인증이 없는 경우 ~~~/login 페이지로 리다이렉션
+                .andExpect(status().is3xxRedirection()); // 상태코드도 3xx 리다이렉션
     }
 
     @Test
@@ -73,12 +75,12 @@ class NoticeControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = {"ADMIN"}, username = "admin", password = "admin")
+    @WithMockUser(roles = {"ADMIN"}, username = "admin", password = "admin") // admin 권한의 가짜 유저 생성
     void postNotice_어드민인증있음() throws Exception {
         mvc.perform(
                 post("/notice").with(csrf())
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                        .param("title", "제목")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED) // 폼 데이터를 사용
+                        .param("title", "제목") // 파라미터 목록
                         .param("content", "내용")
         ).andExpect(redirectedUrl("notice")).andExpect(status().is3xxRedirection());
     }

@@ -20,7 +20,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "member")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User implements UserDetails { // Spring Security 인증 인가에 필요한 메소드를 구현
+public class User implements UserDetails {
+
+    private static final String ROLE_ADMIN = "ROLE_ADMIN";
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,7 +43,7 @@ public class User implements UserDetails { // Spring Security 인증 인가에 �
     }
 
     public boolean isAdmin() {
-        return "ROLE_ADMIN".equals(authority);
+        return ROLE_ADMIN.equals(authority);
     }
 
     @Override

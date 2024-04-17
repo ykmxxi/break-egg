@@ -60,6 +60,7 @@ class NoteControllerTest {
 
     @Test
     // WithUserDetails 로 테스트 하는 방법
+    // SpringSecurityConfig 설정 파일에서 구현한 UserDetailsService를 userDetailsServiceBeanName에 넣어 사용
     @WithUserDetails(
             value = "user123", // userDetailsService를 통해 가져올 수 있는 유저
             userDetailsServiceBeanName = "userDetailsService", // UserDetailsService 구현체의 Bean

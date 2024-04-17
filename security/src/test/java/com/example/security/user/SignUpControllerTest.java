@@ -26,7 +26,7 @@ class SignUpControllerTest {
     @BeforeEach
     void setUp(@Autowired WebApplicationContext applicationContext) {
         this.mvc = MockMvcBuilders.webAppContextSetup(applicationContext)
-                .apply(springSecurity())
+                .apply(springSecurity()) // SecurityMockMvcConfigurers.springSecurity()
                 .alwaysDo(print())
                 .build();
     }
