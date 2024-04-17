@@ -2,6 +2,10 @@ package com.example.order.product;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
 public class ProductService {
 
     private final ProductPort productPort;
@@ -10,6 +14,7 @@ public class ProductService {
         this.productPort = productPort;
     }
 
+    @Transactional
     public void addProduct(final AddProductRequest request) {
         Product product = new Product(request.name(), request.price(), request.discountPolicy());
 
