@@ -4,14 +4,20 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.example.security.filter.StopwatchFilter;
+import com.example.security.filter.TesterAuthenticationFilter;
 import com.example.security.user.User;
 import com.example.security.user.UserService;
 
@@ -38,8 +44,34 @@ public class SpringSecurityConfig {
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
+    /**
+     * AuthenticationManager 빈 등록
+     */
+    @Bean
+    public AuthenticationManager authenticationManager(
+            final AuthenticationConfiguration authenticationConfiguration
+    ) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
     @Bean
     public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
+        // 커스텀 필터 추가
+        http.addFilterBefore(
+                new StopwatchFilter(), // 요청-응답 시간을 찍는 로그 필터, 가장 먼저 실행됨
+                WebAsyncManagerIntegrationFilter.class // WebAsyncManagerIntegrationFilter 앞에
+        );
+
+        // Spring Security 5.7 이후부터 authenticationManager 가져오는 방법이 달라짐
+        // HttpSecurity의 AuthenticationConfiguration을 가져와 찾아야함
+        AuthenticationManager authenticationManager = this.authenticationManager(
+                http.getSharedObject(AuthenticationConfiguration.class)
+        );
+        http.addFilterBefore(
+                new TesterAuthenticationFilter(authenticationManager), // tester 유저 권한 필터는
+                UsernamePasswordAuthenticationFilter.class // 해당 필터 앞에 위치한다
+        );
+
         // basic authentication
         http.httpBasic().disable(); // basic authentication filter 비활성화
 
