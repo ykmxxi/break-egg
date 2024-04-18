@@ -9,16 +9,22 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.example.security.filter.StopwatchFilter;
 import com.example.security.filter.TesterAuthenticationFilter;
+import com.example.security.jwt.JwtAuthenticationFilter;
+import com.example.security.jwt.JwtAuthorizationFilter;
+import com.example.security.jwt.JwtProperties;
 import com.example.security.user.User;
+import com.example.security.user.UserRepository;
 import com.example.security.user.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,6 +35,7 @@ import lombok.RequiredArgsConstructor;
 public class SpringSecurityConfig {
 
     private final UserService userService;
+    private final UserRepository userRepository;
 
     /**
      * 정적 리소스는 spring security 대상에서 제외
@@ -64,22 +71,39 @@ public class SpringSecurityConfig {
 
         // Spring Security 5.7 이후부터 authenticationManager 가져오는 방법이 달라짐
         // HttpSecurity의 AuthenticationConfiguration을 가져와 찾아야함
-        AuthenticationManager authenticationManager = this.authenticationManager(
-                http.getSharedObject(AuthenticationConfiguration.class)
-        );
-        http.addFilterBefore(
-                new TesterAuthenticationFilter(authenticationManager), // tester 유저 권한 필터는
-                UsernamePasswordAuthenticationFilter.class // 해당 필터 앞에 위치한다
-        );
+//        AuthenticationManager authenticationManager = this.authenticationManager(
+//                http.getSharedObject(AuthenticationConfiguration.class)
+//        );
+//        http.addFilterBefore(
+//                new TesterAuthenticationFilter(authenticationManager), // tester 유저 권한 필터는
+//                JwtAuthenticationFilter.class // 해당 필터 앞에 위치한다
+//        );
 
         // basic authentication
         http.httpBasic().disable(); // basic authentication filter 비활성화
 
-        // csrf(사이트 위변조 요청 방지)
-        http.csrf();
+        // csrf(사이트 위변조 요청 방지), JWT Token 사용으로 disable 처리
+        http.csrf().disable();
 
-        http.rememberMe(); // 토큰 기반 기억 인증을 허용하는 방법, 로그인 유지 기능에 사용
+        // JWT Token 사용으로 disable 처리
+        http.rememberMe().disable(); // 토큰 기반 기억 인증을 허용하는 방법, 로그인 유지 기능에 사용
         // 브라우저를 종료해도 위 RememberMe 토큰은 남아있음, 반대로 JSESSIONID 쿠키는 브라우저 종료시 삭제
+
+        // stateless
+        http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        // jwt filter
+        AuthenticationManager authenticationManager = this.authenticationManager(
+                http.getSharedObject(AuthenticationConfiguration.class)
+        );
+        http.addFilterBefore(
+                new JwtAuthenticationFilter(authenticationManager),
+                UsernamePasswordAuthenticationFilter.class
+        ).addFilterBefore(
+                new JwtAuthorizationFilter(userRepository),
+                BasicAuthenticationFilter.class
+        );
 
         http.authorizeRequests() // 인가(Authorization) 설정, 경로별로 권한을 설정
                 // 홈화면, 회원가입 화면은 모두에게 허용
@@ -98,7 +122,9 @@ public class SpringSecurityConfig {
         // 별도의 로그아웃 기능을 구현하지 않아도 됨
         http.logout() // 로그아웃이 발생하도록 트리거하는 RequestMatcher
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true) // 로그아웃시 세션 무효화
+                .deleteCookies(JwtProperties.COOKIE_NAME); // 로그아웃시 JWT Token이 담긴 쿠키 삭제
 
         return http.build();
     }
