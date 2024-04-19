@@ -24,11 +24,35 @@ class ProductApiTest extends ApiTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(request)
                 .when()
-                .post("products")
+                .post("/products")
                 .then()
                 .log().all().extract();
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
+    }
+
+    @Test
+    void 상품조회_API() {
+        AddProductRequest request = createRequest();
+
+        ExtractableResponse<Response> productAddResponse = RestAssured.given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(request)
+                .when()
+                .post("/products")
+                .then()
+                .log().all().extract();
+
+        Long productId = 1L;
+
+        ExtractableResponse<Response> response = RestAssured.given().log().all()
+                .when()
+                .get("/products/{productId}", productId)
+                .then().log().all()
+                .extract();
+
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.jsonPath().getString("name")).isEqualTo("상품명");
     }
 
     private static AddProductRequest createRequest() {

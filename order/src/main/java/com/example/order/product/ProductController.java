@@ -2,6 +2,8 @@ package com.example.order.product;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,13 @@ public class ProductController {
         productService.addProduct(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping("/{productId}")
+    public ResponseEntity<GetProductResponse> getProduct(@PathVariable final Long productId) {
+        GetProductResponse response = productService.getProduct(productId);
+
+        return ResponseEntity.ok(response);
     }
 
 }
