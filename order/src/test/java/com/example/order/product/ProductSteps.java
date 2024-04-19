@@ -2,6 +2,10 @@ package com.example.order.product;
 
 import org.springframework.http.MediaType;
 
+import com.example.order.product.domain.DiscountPolicy;
+import com.example.order.product.service.AddProductRequest;
+import com.example.order.product.service.UpdateProductRequest;
+
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;

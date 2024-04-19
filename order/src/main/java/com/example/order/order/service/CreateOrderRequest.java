@@ -1,4 +1,4 @@
-package com.example.order.order;
+package com.example.order.order.service;
 
 import org.springframework.util.Assert;
 

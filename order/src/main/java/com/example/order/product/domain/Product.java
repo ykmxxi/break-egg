@@ -1,4 +1,4 @@
-package com.example.order.product;
+package com.example.order.product.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

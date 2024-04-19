@@ -4,8 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import com.example.order.product.DiscountPolicy;
-import com.example.order.product.Product;
+import com.example.order.order.domain.Order;
+import com.example.order.product.domain.DiscountPolicy;
+import com.example.order.product.domain.Product;
 
 class OrderTest {
 

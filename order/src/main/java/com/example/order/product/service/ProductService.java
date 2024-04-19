@@ -1,9 +1,12 @@
-package com.example.order.product;
+package com.example.order.product.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.example.order.product.port.ProductPort;
+import com.example.order.product.domain.Product;
 
 @Service
 public class ProductService {

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 
 import com.example.order.ApiTest;
 import com.example.order.order.OrderSteps;
+import com.example.order.payment.service.PaymentRequest;
 import com.example.order.product.ProductSteps;
 
 import io.restassured.response.ExtractableResponse;

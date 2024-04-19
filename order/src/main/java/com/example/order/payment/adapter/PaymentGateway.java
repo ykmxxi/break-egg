@@ -1,4 +1,4 @@
-package com.example.order.payment;
+package com.example.order.payment.adapter;
 
 public interface PaymentGateway {
 

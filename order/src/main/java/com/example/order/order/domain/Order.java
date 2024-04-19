@@ -1,4 +1,4 @@
-package com.example.order.order;
+package com.example.order.order.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 import org.springframework.util.Assert;
 
-import com.example.order.product.Product;
+import com.example.order.product.domain.Product;
 
 import lombok.AccessLevel;
 import lombok.Getter;

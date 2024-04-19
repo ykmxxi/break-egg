@@ -1,4 +1,4 @@
-package com.example.order.product;
+package com.example.order.product.adapter;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.order.product.service.AddProductRequest;
+import com.example.order.product.service.GetProductResponse;
+import com.example.order.product.service.ProductService;
+import com.example.order.product.service.UpdateProductRequest;
 
 @RestController
 @RequestMapping("/products")

@@ -1,9 +1,11 @@
-package com.example.order.order;
+package com.example.order.order.adapter;
 
 import org.springframework.stereotype.Component;
 
-import com.example.order.product.Product;
-import com.example.order.product.ProductRepository;
+import com.example.order.order.port.OrderPort;
+import com.example.order.order.domain.Order;
+import com.example.order.product.domain.Product;
+import com.example.order.product.adapter.ProductRepository;
 
 @Component
 public class OrderAdapter implements OrderPort {

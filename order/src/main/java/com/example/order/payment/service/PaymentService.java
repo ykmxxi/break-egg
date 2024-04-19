@@ -1,4 +1,4 @@
-package com.example.order.payment;
+package com.example.order.payment.service;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.order.order.Order;
+import com.example.order.order.domain.Order;
+import com.example.order.payment.port.PaymentPort;
+import com.example.order.payment.domain.Payment;
 
 @RestController
 @RequestMapping("/payments")

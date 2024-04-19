@@ -1,8 +1,11 @@
-package com.example.order.product;
+package com.example.order.product.adapter;
 
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+
+import com.example.order.product.domain.Product;
+import com.example.order.product.port.ProductPort;
 
 @Component
 public class ProductAdapter implements ProductPort {

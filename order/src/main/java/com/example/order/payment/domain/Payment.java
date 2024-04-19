@@ -1,4 +1,4 @@
-package com.example.order.payment;
+package com.example.order.payment.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 import org.springframework.util.Assert;
 
-import com.example.order.order.Order;
+import com.example.order.order.domain.Order;
 
 import lombok.AccessLevel;
 import lombok.Getter;

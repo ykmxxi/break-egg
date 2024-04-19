@@ -1,4 +1,4 @@
-package com.example.order.order;
+package com.example.order.order.service;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.order.product.Product;
+import com.example.order.order.domain.Order;
+import com.example.order.order.port.OrderPort;
+import com.example.order.product.domain.Product;
 
 @RestController
 @RequestMapping("/orders")

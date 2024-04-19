@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
 import com.example.order.ApiTest;
+import com.example.order.order.service.CreateOrderRequest;
 import com.example.order.product.ProductSteps;
 
 import io.restassured.response.ExtractableResponse;

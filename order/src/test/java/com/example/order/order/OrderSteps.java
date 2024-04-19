@@ -2,6 +2,8 @@ package com.example.order.order;
 
 import org.springframework.http.MediaType;
 
+import com.example.order.order.service.CreateOrderRequest;
+
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;

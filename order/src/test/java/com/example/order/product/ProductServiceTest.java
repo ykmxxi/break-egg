@@ -10,6 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.example.order.product.domain.DiscountPolicy;
+import com.example.order.product.domain.Product;
+import com.example.order.product.service.AddProductRequest;
+import com.example.order.product.service.GetProductResponse;
+import com.example.order.product.service.ProductService;
+import com.example.order.product.service.UpdateProductRequest;
+
 @SpringBootTest
 class ProductServiceTest {
 
