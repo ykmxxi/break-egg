@@ -44,6 +44,23 @@ class ProductServiceTest {
         assertThat(response).isNotNull();
     }
 
+    @Test
+    void 상품수정() {
+        // given
+        Long productId = 1L;
+        UpdateProductRequest request = new UpdateProductRequest("상품수정", 2000, DiscountPolicy.NONE);
+        productService.addProduct(createRequest());
+
+        // when
+        productService.updateProduct(productId, request);
+
+        // then
+        GetProductResponse response = productService.getProduct(productId);
+        assertThat(response.name()).isEqualTo("상품수정");
+        assertThat(response.price()).isEqualTo(2000);
+
+    }
+
     private static AddProductRequest createRequest() {
         String name = "상품명";
         int price = 1000;

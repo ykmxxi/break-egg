@@ -3,6 +3,7 @@ package com.example.order.product;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +32,16 @@ public class ProductController {
         GetProductResponse response = productService.getProduct(productId);
 
         return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{productId}")
+    public ResponseEntity<Void> updateProduct(
+            @PathVariable final Long productId,
+            @RequestBody final UpdateProductRequest request
+    ) {
+        productService.updateProduct(productId, request);
+
+        return ResponseEntity.ok().build();
     }
 
 }
