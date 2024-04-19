@@ -1,5 +1,7 @@
 package com.example.order.product;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -27,6 +29,19 @@ class ProductServiceTest {
             log.info("Product id={}, name={}, price={}", product.getId(), product.getName(), product.getPrice());
         }
 
+    }
+
+    @Test
+    void 상품조회() {
+        // given
+        productService.addProduct(createRequest());
+        Long productId = 1L;
+
+        // when
+        GetProductResponse response = productService.getProduct(productId);
+
+        // then
+        assertThat(response).isNotNull();
     }
 
     private static AddProductRequest createRequest() {

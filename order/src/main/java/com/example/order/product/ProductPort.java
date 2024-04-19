@@ -8,4 +8,6 @@ public interface ProductPort {
 
     List<Product> findAll();
 
+    Product getProduct(final Long productId);
+
 }

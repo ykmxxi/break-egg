@@ -25,4 +25,15 @@ public class ProductService {
         return productPort.findAll();
     }
 
+    public GetProductResponse getProduct(final Long productId) {
+        Product product = productPort.getProduct(productId);
+
+        return new GetProductResponse(
+                product.getId(),
+                product.getName(),
+                product.getPrice(),
+                product.getDiscountPolicy()
+        );
+    }
+
 }

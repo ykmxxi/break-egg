@@ -23,4 +23,10 @@ public class ProductAdapter implements ProductPort {
         return productRepository.findAll();
     }
 
+    @Override
+    public Product getProduct(final Long productId) {
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("상품이 존재하지 않습니다."));
+    }
+
 }
