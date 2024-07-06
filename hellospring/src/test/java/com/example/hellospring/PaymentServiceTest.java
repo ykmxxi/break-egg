@@ -10,7 +10,7 @@ class PaymentServiceTest {
 
     @Test
     void prepareTest() throws Exception {
-        PaymentService paymentService = new WebApiExRatePaymentService();
+        PaymentService paymentService = new PaymentService();
 
         Payment result = paymentService.prepare(1L, "USD", BigDecimal.valueOf(50.7));
         assertThat(result).isInstanceOf(Payment.class);

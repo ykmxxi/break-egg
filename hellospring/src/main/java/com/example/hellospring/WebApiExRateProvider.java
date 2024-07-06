@@ -10,12 +10,12 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class WebApiExRatePaymentService extends PaymentService {
+public class WebApiExRateProvider implements ExRateProvider {
 
     private static final String EXCHANGE_RATE_URL = "https://open.er-api.com/v6/latest/";
-    
+
     @Override
-    BigDecimal getExchangeRate(final String currency) throws IOException {
+    public BigDecimal getExchangeRate(final String currency) throws IOException {
         URL url = new URL(EXCHANGE_RATE_URL + currency);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));

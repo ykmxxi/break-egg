@@ -1,12 +1,11 @@
 package com.example.hellospring;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 
-public class SimpleExchangeRatePaymentService extends PaymentService {
+public class SimpleExRateProvider implements ExRateProvider {
 
     @Override
-    BigDecimal getExchangeRate(final String currency) throws IOException {
+    public BigDecimal getExchangeRate(final String currency) {
         if (currency.equals("USD")) {
             return BigDecimal.valueOf(1000);
         }
