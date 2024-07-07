@@ -10,7 +10,8 @@ class PaymentServiceTest {
 
     @Test
     void prepareTest() throws Exception {
-        PaymentService paymentService = new PaymentService();
+        ObjectFactory objectFactory = new ObjectFactory();
+        PaymentService paymentService = objectFactory.paymentService();
 
         Payment result = paymentService.prepare(1L, "USD", BigDecimal.valueOf(50.7));
         assertThat(result).isInstanceOf(Payment.class);
