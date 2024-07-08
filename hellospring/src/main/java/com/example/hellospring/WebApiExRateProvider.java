@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+// import org.springframework.stereotype.Component;
+
+// @Component // configuration 파일에 설정 없이 컴포넌트 애노테이션을 사용해도 됨
 public class WebApiExRateProvider implements ExRateProvider {
 
     private static final String EXCHANGE_RATE_URL = "https://open.er-api.com/v6/latest/";

@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+// import org.springframework.stereotype.Component;
+
+// @Component // configuration 파일에 설정 없이 컴포넌트 애노테이션을 사용해도 됨
 public class PaymentService {
 
     private final ExRateProvider exRateProvider;
