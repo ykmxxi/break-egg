@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import com.example.hellospring.payment.PaymentService;
+
 public class SingletonTest {
 
     @Test

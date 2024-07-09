@@ -1,6 +1,8 @@
-package com.example.hellospring;
+package com.example.hellospring.exrate;
 
 import java.math.BigDecimal;
+
+import com.example.hellospring.payment.ExRateProvider;
 
 public class SimpleExRateProvider implements ExRateProvider {
 

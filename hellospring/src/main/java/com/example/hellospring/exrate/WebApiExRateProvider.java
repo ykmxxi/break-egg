@@ -1,4 +1,4 @@
-package com.example.hellospring;
+package com.example.hellospring.exrate;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.stream.Collectors;
 
+import com.example.hellospring.payment.ExRateProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 // import org.springframework.stereotype.Component;

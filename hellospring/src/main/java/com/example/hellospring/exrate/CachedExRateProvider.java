@@ -1,8 +1,10 @@
-package com.example.hellospring;
+package com.example.hellospring.exrate;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
+import com.example.hellospring.payment.ExRateProvider;
 
 /**
  * Decorator: 데코레이터의 기능을 적용하고자 하는 오브젝트와 같은 인터페이스를 구현해야 한다

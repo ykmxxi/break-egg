@@ -7,6 +7,9 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import com.example.hellospring.payment.Payment;
+import com.example.hellospring.payment.PaymentService;
+
 public class Client {
 
     public static void main(String[] args) throws IOException, InterruptedException {
