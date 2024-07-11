@@ -2,6 +2,7 @@ package com.example.hellospring.payment;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.Clock;
 import java.time.LocalDateTime;
 
 // import org.springframework.stereotype.Component;
@@ -10,16 +11,18 @@ import java.time.LocalDateTime;
 public class PaymentService {
 
     private final ExRateProvider exRateProvider;
+    private final Clock clock;
 
-    public PaymentService(final ExRateProvider exRateProvider) {
+    public PaymentService(final ExRateProvider exRateProvider, final Clock clock) {
         this.exRateProvider = exRateProvider;
+        this.clock = clock;
     }
 
     public Payment prepare(final Long orderId, final String currency, final BigDecimal foreignCurrencyAmount)
             throws IOException {
         BigDecimal exRate = exRateProvider.getExchangeRate(currency);
         BigDecimal convertedAmount = foreignCurrencyAmount.multiply(exRate);
-        LocalDateTime validUntil = LocalDateTime.now().plusMinutes(30);
+        LocalDateTime validUntil = LocalDateTime.now(clock).plusMinutes(30);
 
         return new Payment(orderId, currency, foreignCurrencyAmount,
                 exRate, convertedAmount, validUntil);

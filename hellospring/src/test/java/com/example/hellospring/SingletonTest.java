@@ -14,7 +14,7 @@ public class SingletonTest {
     @Test
     @DisplayName("4개의 PaymentService 객체는 모두 같은 참조를 갖는다")
     void singleton() {
-        BeanFactory beanFactory = new AnnotationConfigApplicationContext(ObjectFactory.class);
+        BeanFactory beanFactory = new AnnotationConfigApplicationContext(PaymentConfig.class);
         PaymentService paymentService1 = beanFactory.getBean(PaymentService.class);
         PaymentService paymentService2 = beanFactory.getBean(PaymentService.class);
 
@@ -26,9 +26,9 @@ public class SingletonTest {
 
         // 직접 구성정보 파일을 가져와 빈을 생성해보면, new 키워드가 2번 호출되어 참조가 다른 객체가 생성되는게 Java 기본
         // @Configuration 붙으면 메소드 호출을 여러번 해도 특별한 지시가 없으면 싱글톤으로 한 개만 생성
-        ObjectFactory objectFactory = beanFactory.getBean(ObjectFactory.class);
-        PaymentService paymentService3 = objectFactory.paymentService();
-        PaymentService paymentService4 = objectFactory.paymentService();
+        PaymentConfig paymentConfig = beanFactory.getBean(PaymentConfig.class);
+        PaymentService paymentService3 = paymentConfig.paymentService();
+        PaymentService paymentService4 = paymentConfig.paymentService();
 
         assertThat(paymentService3).isEqualTo(paymentService4);
         assertThat(paymentService3 == paymentService4).isTrue();

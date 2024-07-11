@@ -1,5 +1,7 @@
 package com.example.hellospring;
 
+import java.time.Clock;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -11,11 +13,11 @@ import com.example.hellospring.payment.PaymentService;
 
 @Configuration // 구성정보를 갖고 있음을 알려준다
 @ComponentScan
-public class ObjectFactory {
+public class PaymentConfig {
 
     @Bean
     public PaymentService paymentService() {
-        return new PaymentService(cachedExRateProvider());
+        return new PaymentService(cachedExRateProvider(), clock());
     }
 
     @Bean
@@ -26,6 +28,11 @@ public class ObjectFactory {
     @Bean
     public ExRateProvider exRateProvider() {
         return new WebApiExRateProvider();
+    }
+
+    @Bean
+    public Clock clock() {
+        return Clock.systemDefaultZone();
     }
 
 }

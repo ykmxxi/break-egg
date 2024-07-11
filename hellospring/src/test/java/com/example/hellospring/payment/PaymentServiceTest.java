@@ -6,8 +6,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.Clock;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,11 +19,18 @@ import com.example.hellospring.exrate.WebApiExRateProvider;
 
 class PaymentServiceTest {
 
+    private Clock clock;
+
+    @BeforeEach
+    void setUp() {
+        this.clock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
+    }
+
     @Test
     @DisplayName("잘못된 prepare() 테스트: 적용 환율, 원화 환산 금액 계산, 원화 환산 금액 유효시간 계산")
     void badPrepare() throws Exception {
         // 우리가 제어할 수 없는 외부 API에 의존해 기능을 검증하고 있음
-        PaymentService paymentService = new PaymentService(new WebApiExRateProvider());
+        PaymentService paymentService = new PaymentService(new WebApiExRateProvider(), this.clock);
 
         Payment payment = paymentService.prepare(1L, "USD", TEN);
 
@@ -38,13 +49,27 @@ class PaymentServiceTest {
     @Test
     @DisplayName("prepare() 금액 계산 테스트: 테스트 대역(Test Double) 사용")
     void convertedAmount() throws Exception {
-        testAmount(valueOf(500L), valueOf(5_000L));
-        testAmount(valueOf(1000L), valueOf(10_000L));
-        testAmount(valueOf(1300L), valueOf(13_000L));
+        testAmount(valueOf(500L), valueOf(5_000L), this.clock);
+        testAmount(valueOf(1000L), valueOf(10_000L), this.clock);
+        testAmount(valueOf(1300L), valueOf(13_000L), this.clock);
     }
 
-    private void testAmount(final BigDecimal exRate, final BigDecimal convertedAmount) throws IOException {
-        PaymentService paymentService = new PaymentService(new ExRateProviderStub(exRate));
+    @Test
+    @DisplayName("prepare() 유효 기간 테스트")
+    void validUntil() throws IOException {
+        PaymentService paymentService = new PaymentService(new ExRateProviderStub(valueOf(1000L)), clock);
+
+        // valid until이 prepare() 30분 뒤로 설정됐는가?
+        Payment payment = paymentService.prepare(1L, "USD", TEN);
+        LocalDateTime expectedValidUntil = LocalDateTime.now(this.clock)
+                .plusMinutes(30L);
+
+        assertThat(payment.getValidUntil()).isEqualTo(expectedValidUntil);
+    }
+
+    private void testAmount(final BigDecimal exRate, final BigDecimal convertedAmount, final Clock clock)
+            throws IOException {
+        PaymentService paymentService = new PaymentService(new ExRateProviderStub(exRate), clock);
 
         Payment payment = paymentService.prepare(1L, "USD", TEN);
 
