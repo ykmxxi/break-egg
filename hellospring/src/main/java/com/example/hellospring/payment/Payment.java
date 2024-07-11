@@ -1,6 +1,7 @@
 package com.example.hellospring.payment;
 
 import java.math.BigDecimal;
+import java.time.Clock;
 import java.time.LocalDateTime;
 
 public class Payment {
@@ -12,7 +13,7 @@ public class Payment {
     private BigDecimal convertedAmount; // 환산 금액
     private LocalDateTime validUntil; // 환산 금액 유효 기간
 
-    public Payment(
+    private Payment(
             final Long orderId,
             final String currency,
             final BigDecimal foreignCurrencyAmount,
@@ -26,6 +27,24 @@ public class Payment {
         this.exchangeRate = exchangeRate;
         this.convertedAmount = convertedAmount;
         this.validUntil = validUntil;
+    }
+
+    // Factory Method: 의미있는 처리가 가능하고, 이름 부여가 가능
+    public static Payment createPrepared(
+            final Long orderId,
+            final String currency,
+            final BigDecimal foreignCurrencyAmount,
+            final BigDecimal exchangeRate,
+            final LocalDateTime now
+    ) {
+        BigDecimal convertedAmount = foreignCurrencyAmount.multiply(exchangeRate);
+        LocalDateTime validUntil = now.plusMinutes(30);
+
+        return new Payment(orderId, currency, foreignCurrencyAmount, exchangeRate, convertedAmount, validUntil);
+    }
+
+    public boolean isValid(final Clock clock) {
+        return LocalDateTime.now(clock).isBefore(validUntil);
     }
 
     public Long getOrderId() {
