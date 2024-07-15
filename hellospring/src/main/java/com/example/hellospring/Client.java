@@ -1,6 +1,5 @@
 package com.example.hellospring;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
@@ -12,7 +11,7 @@ import com.example.hellospring.payment.PaymentService;
 
 public class Client {
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
         BeanFactory beanFactory = new AnnotationConfigApplicationContext(PaymentConfig.class); // BeanFactory 구현체
         PaymentService paymentService = beanFactory.getBean(PaymentService.class);
 

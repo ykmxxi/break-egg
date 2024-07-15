@@ -4,7 +4,6 @@ import static java.math.BigDecimal.TEN;
 import static java.math.BigDecimal.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.Instant;
@@ -56,7 +55,7 @@ class PaymentServiceTest {
 
     @Test
     @DisplayName("prepare() 유효 기간 테스트")
-    void validUntil() throws IOException {
+    void validUntil() {
         PaymentService paymentService = new PaymentService(new ExRateProviderStub(valueOf(1000L)), clock);
 
         // valid until이 prepare() 30분 뒤로 설정됐는가?
@@ -67,8 +66,7 @@ class PaymentServiceTest {
         assertThat(payment.getValidUntil()).isEqualTo(expectedValidUntil);
     }
 
-    private void testAmount(final BigDecimal exRate, final BigDecimal convertedAmount, final Clock clock)
-            throws IOException {
+    private void testAmount(final BigDecimal exRate, final BigDecimal convertedAmount, final Clock clock) {
         PaymentService paymentService = new PaymentService(new ExRateProviderStub(exRate), clock);
 
         Payment payment = paymentService.prepare(1L, "USD", TEN);

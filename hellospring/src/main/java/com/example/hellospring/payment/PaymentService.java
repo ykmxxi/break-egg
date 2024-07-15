@@ -1,6 +1,5 @@
 package com.example.hellospring.payment;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.LocalDateTime;
@@ -18,8 +17,7 @@ public class PaymentService {
         this.clock = clock;
     }
 
-    public Payment prepare(final Long orderId, final String currency, final BigDecimal foreignCurrencyAmount)
-            throws IOException {
+    public Payment prepare(final Long orderId, final String currency, final BigDecimal foreignCurrencyAmount) {
         BigDecimal exRate = exRateProvider.getExchangeRate(currency);
 
         return Payment.createPrepared(orderId, currency, foreignCurrencyAmount, exRate, LocalDateTime.now(clock));

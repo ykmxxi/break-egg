@@ -1,6 +1,5 @@
 package com.example.hellospring.exrate;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -22,7 +21,7 @@ public class CachedExRateProvider implements ExRateProvider {
     }
 
     @Override
-    public BigDecimal getExchangeRate(final String currency) throws IOException {
+    public BigDecimal getExchangeRate(final String currency) {
         if (cachedExRate == null || cacheExpiryTime.isBefore(LocalDateTime.now())) {
             cachedExRate = target.getExchangeRate(currency);
             cacheExpiryTime = LocalDateTime.now().plusSeconds(3); // 임의로 3초를 유효기간으로 지정

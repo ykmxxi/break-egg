@@ -4,7 +4,6 @@ import static java.math.BigDecimal.TEN;
 import static java.math.BigDecimal.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.io.IOException;
 import java.time.Clock;
 import java.time.LocalDateTime;
 
@@ -45,7 +44,7 @@ class PaymentServiceSpringTest {
 
     @Test
     @DisplayName("prepare() 유효 기간 테스트")
-    void validUntil() throws IOException {
+    void validUntil() {
         Payment payment = paymentService.prepare(1L, "USD", TEN);
         LocalDateTime expectedValidUntil = LocalDateTime.now(this.clock)
                 .plusMinutes(30L);
