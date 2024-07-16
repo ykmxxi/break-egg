@@ -5,12 +5,10 @@ import java.time.Clock;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
-import com.example.hellospring.api.ApiTemplate;
-import com.example.hellospring.api.ErApiExRateExtractor;
-import com.example.hellospring.api.SimpleApiExecutor;
 import com.example.hellospring.exrate.CachedExRateProvider;
-import com.example.hellospring.exrate.WebApiExRateProvider;
+import com.example.hellospring.exrate.RestTemplateExRateProvider;
 import com.example.hellospring.payment.ExRateProvider;
 import com.example.hellospring.payment.PaymentService;
 
@@ -30,12 +28,12 @@ public class PaymentConfig {
 
     @Bean
     public ExRateProvider exRateProvider() {
-        return new WebApiExRateProvider(apiTemplate());
+        return new RestTemplateExRateProvider(restTemplate());
     }
 
     @Bean
-    public ApiTemplate apiTemplate() {
-        return new ApiTemplate(new SimpleApiExecutor(), new ErApiExRateExtractor());
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
     @Bean
