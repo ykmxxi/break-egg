@@ -14,22 +14,25 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.example.hellospring.api.ApiTemplate;
 import com.example.hellospring.exrate.WebApiExRateProvider;
 
 class PaymentServiceTest {
 
     private Clock clock;
+    private ApiTemplate apiTemplate;
 
     @BeforeEach
     void setUp() {
         this.clock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
+        this.apiTemplate = new ApiTemplate();
     }
 
     @Test
     @DisplayName("잘못된 prepare() 테스트: 적용 환율, 원화 환산 금액 계산, 원화 환산 금액 유효시간 계산")
     void badPrepare() throws Exception {
         // 우리가 제어할 수 없는 외부 API에 의존해 기능을 검증하고 있음
-        PaymentService paymentService = new PaymentService(new WebApiExRateProvider(), this.clock);
+        PaymentService paymentService = new PaymentService(new WebApiExRateProvider(this.apiTemplate), this.clock);
 
         Payment payment = paymentService.prepare(1L, "USD", TEN);
 
