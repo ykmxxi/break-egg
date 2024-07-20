@@ -10,6 +10,10 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
+import com.example.hellospring.data.OrderRepository;
+
+import jakarta.persistence.EntityManagerFactory;
+
 @Configuration
 public class DataConfig {
 
@@ -34,6 +38,11 @@ public class DataConfig {
             setShowSql(true);
         }});
         return emf;
+    }
+
+    @Bean
+    public OrderRepository orderRepository(final EntityManagerFactory emf) {
+        return new OrderRepository(emf);
     }
 
 }
