@@ -13,8 +13,6 @@ import org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcesso
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
-import com.example.hellospring.data.OrderRepository;
-
 import jakarta.persistence.EntityManagerFactory;
 
 @Configuration
@@ -51,11 +49,6 @@ public class DataConfig {
     @Bean
     public JpaTransactionManager transactionManager(final EntityManagerFactory emf) {
         return new JpaTransactionManager(emf);
-    }
-
-    @Bean
-    public OrderRepository orderRepository() {
-        return new OrderRepository();
     }
 
 }
