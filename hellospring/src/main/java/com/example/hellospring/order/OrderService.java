@@ -1,6 +1,7 @@
 package com.example.hellospring.order;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -24,6 +25,14 @@ public class OrderService {
             orderRepository.save(order);
             return order;
         });
+    }
+
+    public List<Order> createOrders(final List<OrderRequest> requests) {
+        return new TransactionTemplate(transactionManager).execute(status ->
+                requests.stream()
+                        .map(req -> createOrder(req.no(), req.total()))
+                        .toList()
+        );
     }
 
 }
