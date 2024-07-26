@@ -8,15 +8,16 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 
 import com.example.hellospring.order.Order;
 import com.example.hellospring.order.OrderService;
+import com.example.hellospring.order.OrderServiceImpl;
 
 public class OrderClient {
 
     public static void main(String[] args) {
         BeanFactory beanFactory = new AnnotationConfigApplicationContext(OrderConfig.class);
-        OrderService orderService = beanFactory.getBean(OrderService.class);
+        OrderService orderServiceImpl = beanFactory.getBean(OrderServiceImpl.class);
         JpaTransactionManager transactionManager = beanFactory.getBean(JpaTransactionManager.class);
 
-        Order order = orderService.createOrder("0100", BigDecimal.TEN);
+        Order order = orderServiceImpl.createOrder("0100", BigDecimal.TEN);
         System.out.println("order = " + order);
     }
 
