@@ -2,15 +2,12 @@ package com.example.helloboot.controller;
 
 import java.util.Objects;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.helloboot.service.HelloService;
 
-@Controller
-@RequestMapping("/hello")
+@RestController
 public class HelloController {
 
     private final HelloService helloService;
@@ -21,8 +18,7 @@ public class HelloController {
         this.helloService = helloService;
     }
 
-    @GetMapping
-    @ResponseBody
+    @GetMapping("/hello")
     public String hello(final String name) {
         // 사용자 요청 검증은 컨트롤러의 중요한 역할 중 하나
         return helloService.sayHello(Objects.requireNonNull(name));
