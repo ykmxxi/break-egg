@@ -1,7 +1,5 @@
 package com.example.helloboot.controller;
 
-import java.util.Objects;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +19,10 @@ public class HelloController {
     @GetMapping("/hello")
     public String hello(final String name) {
         // 사용자 요청 검증은 컨트롤러의 중요한 역할 중 하나
-        return helloService.sayHello(Objects.requireNonNull(name));
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        return helloService.sayHello(name);
     }
 
 }
