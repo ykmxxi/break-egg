@@ -7,11 +7,8 @@ import java.lang.annotation.Target;
 
 import org.springframework.context.annotation.Import;
 
-import com.example.config.autoconfig.DispatcherServletConfig;
-import com.example.config.autoconfig.TomcatWebServerConfig;
-
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE) // class, interface, enum
-@Import({DispatcherServletConfig.class, TomcatWebServerConfig.class}) // 외부 패키지의 클래스를 등록
+@Import(MyAutoConfigImportSelector.class) // 외부 패키지의 클래스를 등록
 public @interface EnableMyAutoConfiguration {
 }
