@@ -2,7 +2,9 @@ package com.example.helloboot;
 
 import org.springframework.boot.SpringApplication;
 
-@MySpringBootAnnotation
+import com.example.config.MySpringBootApplication;
+
+@MySpringBootApplication
 public class HellobootApplication {
 
     public static void main(String[] args) {
