@@ -4,11 +4,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
+import com.example.helloboot.Hello;
+import com.example.helloboot.repository.HelloRepository;
+
 class HelloServiceTest {
 
     @Test
     void simpleHelloService() {
-        SimpleHelloService helloService = new SimpleHelloService();
+        SimpleHelloService helloService = new SimpleHelloService(helloRepositoryStub);
 
         String result = helloService.sayHello("Test");
 
@@ -23,5 +26,17 @@ class HelloServiceTest {
 
         assertThat(result).isEqualTo("*Test*");
     }
+
+    private static HelloRepository helloRepositoryStub = new HelloRepository() {
+        @Override
+        public Hello findHello(String name) {
+            return null;
+        }
+
+        @Override
+        public void increaseCount(String name) {
+
+        }
+    };
 
 }
