@@ -6,11 +6,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.example.helloboot.HellobootTest;
-
-@HellobootTest
+// 스프링 빈들을 컨테이너로 로딩하지만 테스트 동안 웹 환경 설정이 필요없음
+@SpringBootTest(webEnvironment = WebEnvironment.NONE)
+@Transactional // rollback
 class HelloRepositoryTest {
 
     @Autowired JdbcTemplate jdbcTemplate;

@@ -4,12 +4,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+// 스프링 컨테이너와 서블릿 컨테이너를 띄워서 HTTP Request를 보내 테스트를 수행, 설정한 9090 포트 사용
+@SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
 class HelloApiTest {
 
     @Test

@@ -6,11 +6,13 @@ import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
-import com.example.helloboot.HellobootTest;
 import com.example.helloboot.repository.HelloRepository;
 
-@HellobootTest
+// 스프링 빈들을 컨테이너로 로딩하지만 테스트 동안 웹 환경 설정이 필요없음
+@SpringBootTest(webEnvironment = WebEnvironment.NONE)
 class HelloServiceCountTest {
 
     @Autowired HelloService helloService;
